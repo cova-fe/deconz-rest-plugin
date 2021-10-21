@@ -973,6 +973,10 @@ void DeRestPluginPrivate::handleTuyaClusterIndication(const deCONZ::ApsDataIndic
                     {
                         qint16 temp = static_cast<qint16>(data & 0xFFFF) * 10;
                         ResourceItem *item = sensorNode->item(RStateTemperature);
+                        ResourceItem *item2 = sensorNode->item(RConfigOffset);
+                        if (item2 && item2->toNumber() != 0) {
+                          temp += item2->toNumber();
+                        }
 
                         if (item && item->toNumber() != temp)
                         {
